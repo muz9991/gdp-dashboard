@@ -32,7 +32,7 @@ def login():
             st.session_state.email = email
             st.success("Login successful! Redirecting...")
             time.sleep(2)
-            st.switch_page("/pages/Dashboard.py")
+            st.switch_page("pages/Dashboard.py")
         else:
             st.error("Invalid email or password. Please try again.")
 
