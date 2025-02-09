@@ -1,9 +1,12 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from st_pages import hide_pages
 
 # Set page config
 st.set_page_config(page_title="Nuclear Power Plant Worker Dashboard", layout="wide")
+
+hide_pages(["login"])
 
 # Set dark theme styling
 st.markdown(
@@ -15,11 +18,21 @@ st.markdown(
         .large-text {font-size: 20px;}
         table {width: 100%; border-collapse: collapse; margin: 10px 0;}
         th, td {padding: 12px; border: 1px solid #C5C6E0; text-align: left;}
-        th {background-color: #2C2C3A; color: white;}
+        th {background-color: #2C2C3A; color: white; text-align: left;}
+        .top-right-container {display: flex; justify-content: flex-end; align-items: center; gap: 20px;}
+        .logout-button {background-color: #FF5555; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;}
+        .clock {font-size: 18px; font-weight: bold; color: #FFD700; text-align: right;}
     </style>
     """,
     unsafe_allow_html=True
 )
+
+# Top-right corner UI
+top_right_col1, top_right_col2 = st.columns([4, 1])
+with top_right_col2:
+    if st.button("Logout", key="logout", help="Click to log out", on_click=lambda: st.switch_page("login")):
+        st.switch_page("login")
+    
 
 # Sample data
 data = {
@@ -42,6 +55,10 @@ st.markdown("<h2 class='center-text'>🔍 Sensor Status</h2>", unsafe_allow_html
 
 def display_sensor_table(sensor_data):
     df_sensors = pd.DataFrame(sensor_data)
+    df_sensors = df_sensors.style.set_table_styles([
+        {"selector": "th", "props": [("text-align", "left")]},
+        {"selector": "td", "props": [("text-align", "left")]}
+    ])
     st.markdown(df_sensors.to_html(index=False, escape=False), unsafe_allow_html=True)
 
 with st.expander("Normal Sensors"):
@@ -50,7 +67,7 @@ with st.expander("Normal Sensors"):
     display_sensor_table(normal_sensors)
 
 with st.expander("Broken Sensors"):
-    broken_sensors = [{"Sensor Name": "Temp of Molten Concrete (°C)", "Sensor Number": 22, "Current Value": "NaN", "Avg Value (24h)": "NaN", "Upper Bound": "NaN", "Lower Bound": "NaN", "Time Left": "NaN", "Rate of Change": "NaN", "Message": "Mechanical failure detected. Schedule immediate maintenance."}]
+    broken_sensors = [{"Sensor Number": 22,"Sensor Name": "Temp of Molten Concrete (°C)",  "Current Value": "NaN", "Avg Value (24h)": "NaN", "Upper Bound": "NaN", "Lower Bound": "NaN", "Time Left": "NaN", "Rate of Change": "NaN", "Message": "Mechanical failure detected. Schedule immediate maintenance."}]
     display_sensor_table(broken_sensors)
 
 with st.expander("At Risk Sensors"):
@@ -66,29 +83,3 @@ with st.expander("Recovering Sensors"):
         {"Sensor Number": 21,"Sensor Name": "Flow Reactor Coolant Loop (T/hr)", "Current Value": 632.1, "Avg Value (24h)": 702.4, "Upper Bound": 152.4, "Lower Bound": 75.6, "Time Left": 208.6, "Rate of Change": -2.3, "Message": "Recently rebooted. Ensure stable operation for the next cycle."}
     ]
     display_sensor_table(recovering_sensors)
-
-# Regulations and Safety Measures Table
-st.markdown("<h2 class='center-text'>⚠️ Regulations and Safety Measures</h2>", unsafe_allow_html=True)
-
-col1, col2 = st.columns(2)
-with col1:
-    st.markdown("**Regulations and Safety Protocols**")
-    st.markdown("""
-    <ul class='large-text'>
-        <li>🛡️ Wear protective gear at all times</li>
-        <li>🔬 Regular radiation exposure monitoring</li>
-        <li>🚨 Follow emergency evacuation procedures</li>
-        <li>📢 Report any anomalies immediately</li>
-    </ul>
-    """, unsafe_allow_html=True)
-
-with col2:
-    st.markdown("**Recommended Safety Measures**")
-    st.markdown("""
-    <ul class='large-text'>
-        <li>🏫 Regular training on safety protocols</li>
-        <li>📡 Implementation of real-time radiation monitoring</li>
-        <li>📋 Establishing clear emergency response plans</li>
-        <li>⚙️ Frequent maintenance checks on critical systems</li>
-    </ul>
-    """, unsafe_allow_html=True)
