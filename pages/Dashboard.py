@@ -44,7 +44,7 @@ def display_sensor_table(sensor_data):
     df_sensors = pd.DataFrame(sensor_data)
     st.markdown(df_sensors.to_html(index=False, escape=False), unsafe_allow_html=True)
 
-with st.expander("Normal Sensors"):s
+with st.expander("Normal Sensors"):
     normal_sensors = [{"Sensor Number": 20, "Sensor Name": "Spec Enthalpy Przr discharge (kJ/kg)"},
                       {"Sensor Number": 21, "Sensor Name": "Spec Enthalpy RCS leak (kJ/kg)"}]
     display_sensor_table(normal_sensors)
