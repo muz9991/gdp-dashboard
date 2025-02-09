@@ -6,7 +6,6 @@ from st_pages import hide_pages
 # Set page config
 st.set_page_config(page_title="Nuclear Power Plant Worker Dashboard", layout="wide")
 
-hide_pages(["login"])
 
 # Set dark theme styling
 st.markdown(
@@ -30,8 +29,8 @@ st.markdown(
 # Top-right corner UI
 top_right_col1, top_right_col2 = st.columns([4, 1])
 with top_right_col2:
-    if st.button("Logout", key="logout", help="Click to log out", on_click=lambda: st.switch_page("login")):
-        st.switch_page("login")
+    if st.button("Logout", key="logout", help="Click to log out", on_click=lambda: st.switch_page("streamlit_app.py")):
+        st.switch_page("streamlit_app.py")
     
 
 # Sample data
@@ -43,7 +42,7 @@ data = {
 df = pd.DataFrame(data)
 
 # Header
-st.title("Metrics Platform")
+st.markdown("<h1 class='center-text'>Metrics Platform</h1>", unsafe_allow_html=True)
 
 # Centered Pie Chart
 st.subheader("Sensor Count Based on Categories")
@@ -83,3 +82,30 @@ with st.expander("Recovering Sensors"):
         {"Sensor Number": 21,"Sensor Name": "Flow Reactor Coolant Loop (T/hr)", "Current Value": 632.1, "Avg Value (24h)": 702.4, "Upper Bound": 152.4, "Lower Bound": 75.6, "Time Left": 208.6, "Rate of Change": -2.3, "Message": "Recently rebooted. Ensure stable operation for the next cycle."}
     ]
     display_sensor_table(recovering_sensors)
+
+
+# Regulations and Safety Measures Table
+st.markdown("<h2 class='center-text'>⚠️ Regulations and Safety Measures</h2>", unsafe_allow_html=True)
+
+col1, col2 = st.columns(2)
+with col1:
+    st.markdown("**Regulations and Safety Protocols**")
+    st.markdown("""
+    <ul class='large-text'>
+        <li>🛡️ Wear protective gear at all times</li>
+        <li>🔬 Regular radiation exposure monitoring</li>
+        <li>🚨 Follow emergency evacuation procedures</li>
+        <li>📢 Report any anomalies immediately</li>
+    </ul>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown("**Recommended Safety Measures**")
+    st.markdown("""
+    <ul class='large-text'>
+        <li>🏫 Regular training on safety protocols</li>
+        <li>📡 Implementation of real-time radiation monitoring</li>
+        <li>📋 Establishing clear emergency response plans</li>
+        <li>⚙️ Frequent maintenance checks on critical systems</li>
+    </ul>
+    """, unsafe_allow_html=True)
