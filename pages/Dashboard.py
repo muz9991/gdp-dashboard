@@ -50,7 +50,7 @@ fig_severity = px.pie(df, names='Risk Category', values='Sensor Count', title=''
 st.plotly_chart(fig_severity, use_container_width=True)
 
 # Sensor Details
-st.markdown("<h2 class='center-text'>🔍 Sensor Status</h2>", unsafe_allow_html=True)
+st.markdown("<h2 class='center-text'>Pump Status</h2>", unsafe_allow_html=True)
 
 def display_sensor_table(sensor_data):
     df_sensors = pd.DataFrame(sensor_data)

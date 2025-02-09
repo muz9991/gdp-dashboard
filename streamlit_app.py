@@ -23,7 +23,7 @@ if "authenticated" not in st.session_state:
     st.session_state.authenticated = False
 
 def login():
-    st.title("🔐 Nuclear Power Plant Worker Login")
+    st.title("Monitoring and Anomoly detection Platform")
     email = st.text_input("Email Address")
     password = st.text_input("Password", type="password")
     if st.button("Login"):
